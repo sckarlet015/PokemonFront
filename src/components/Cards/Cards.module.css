@@ -1,5 +1,14 @@
 .DivCards{
-    display: flow-root;
+    display: grid;
     justify-content: center;
+}
 
+.conteinerCards{
+
+}
+.btns{
+    margin-top: 10px;
+}
+.btn{
+    margin: 5px;
 }

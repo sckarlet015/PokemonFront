@@ -18,52 +18,50 @@ function App() {
   const dispatch = useDispatch();
   const [pokemons, setPokemons] = useState([])
   const [pokeBuscado, setPokeBuscado] = useState({})
-  const [types, setTypes] = useState([])
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (pokemons.length === 0) {
-      dispatch(getAllPokemon())
-      setPokemons(allPokes)
+      dispatch(getAllPokemon());
+      dispatch(getAllTypes());
     }
-    if(types.length === 0){
-      dispatch(getAllTypes())
-      setTypes(allTypes)
-      console.log(allTypes)
-    }
-  }, [dispatch, allPokes, pokemons, allTypes])
-
-  function getAllPoke(){
-    dispatch(getAllPoke())
-    console.log(allPokes)
-  }
+  }, [dispatch, pokemons]);
 
   function handleClick() { //Funcion del boton Entrar
     navigate("/pokemons")
   }
+  console.log(pokeBuscado);
+
+  useEffect(() => {
+    setPokemons(allPokes);
+  }, [allPokes]);
+
   async function buscar(inputValue) {
     // Validar si es solo letras
     if (/^[a-zA-Z]+$/.test(inputValue)) {
       let poke = await axios(`http://localhost:3001/pokemon/name?name=${inputValue}`)
         .then(response => response.data)
         .then(data => data[0])
+        console.log(poke);
       setPokeBuscado(poke)
+      return poke
     }
     // Validar si es solo numeros
     if (/^\d+$/.test(inputValue)) {
       let poke = await axios(`http://localhost:3001/pokemon/${inputValue}`)
         .then(response => response.data)
         .then(data => data)
+        console.log(poke);
         setPokeBuscado(poke)
+        return poke
     }
-    // Si no es solo letras ni solo numeros, devolver null
     return null;
   }
 
   return (
     <div className="App">
-      {location.pathname !== '/' && <Nav buscar={buscar} getAllPoke={getAllPoke}/>}
+      {location.pathname !== '/' && <Nav/>}
       <Routes>
       <Route
           path='/'

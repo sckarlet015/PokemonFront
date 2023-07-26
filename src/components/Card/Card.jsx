@@ -2,21 +2,48 @@ import { NavLink } from "react-router-dom"
 import style from "./Card.module.css"
 
 export default function Card(props) {
+
+  
+  const handlerHeight = () => {
+    let height = props.altura * 10;
+    if(height < 100){
+     return 100
+    }
+    if(height > 101 && height < 150){
+      return 150
+     }
+     if(height > 200){
+      return 220
+     }
+     return height
+  }
+
+  const hadlerPading = () => {
+    const padingTop = props.altura * 10
+    if(padingTop < 200){
+      return 50
+    }
+    else{
+      return 1
+    }
+  }
   return (
     <div className={style.card}>
-      <img src={props.image} alt="Pokemon" />
+      <p className={style.id}>Pokedex iD: {props.id}</p>
+      <div className={style.contImg}>
+      <img src={props.image} alt="Pokemon" style={{ height: `${handlerHeight()}px`, paddingTop: `${hadlerPading()}px` }}/>
+      </div>
       <div className={style.info}>
         <NavLink
         to={`/detail/${props.id}`}>
-          <h2 className={style.name}>#{props.id} {props.name}</h2>
+          <h1 className={style.name}>{props?.name?.toUpperCase()}</h1>
         </NavLink>
-        <p className={style.id}>ID: {props.id}</p>
-        <p className={style.stat}>Vida: {props.vida}</p>
-        <p className={style.stat}>Ataque: {props.ataque}</p>
-        <p className={style.stat}>Defensa: {props.defensa}</p>
-        <p className={style.stat}>Velocidad: {props.velocidad}</p>
-        <p className={style.stat}>Altura: {props.altura} m</p>
-        <p className={style.stat}>Peso: {props.peso} kg</p>
+        <div className={style.contStat}>
+        <p className={style.stat}>Ata: {props.ataque}</p>
+        <p className={style.stat}>Def: {props.defensa}</p>
+        <p className={style.stat}>Vel: {props.velocidad}</p>
+        <p>{handlerHeight()}</p>
+        </div>
       </div>
       <div className={style.type}>
         <span className={style.grass}>{props.tipo1}</span>

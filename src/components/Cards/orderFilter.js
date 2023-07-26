@@ -9,7 +9,9 @@ const order = (pokemons, sortOrder, getTypes, searchQuery, pokeBuscado) => {
     if (searchQuery?.length > 0) {
       const query = searchQuery.toLowerCase();
       filteredPokemons = filteredPokemons.filter((poke) =>
-      poke.name.toLowerCase().includes(query)
+        isNaN(searchQuery)
+          ? poke.name.toLowerCase().includes(query)
+          : poke.apiID.toString().includes(searchQuery)
       );
     }
 
@@ -27,6 +29,10 @@ const order = (pokemons, sortOrder, getTypes, searchQuery, pokeBuscado) => {
           return a.defensa - b.defensa;
         case "DefDesc":
           return b.defensa - a.defensa;
+        case "IdAsc":
+          return a.apiID - b.apiID;
+        case "IdDesc":
+          return b.apiID - a.apiID;
         default:
           return 0;
       }

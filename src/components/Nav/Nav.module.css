@@ -4,30 +4,40 @@
     justify-content: space-around;
     align-items: center;
     width: full;
-    height: 60px;
+    height: 80px;
     margin-bottom: 10px;
     border-radius: 5px;
 }
 .link{
     text-decoration: none;
-    margin-right: 20px;
-    font-size: 20px;
-    color: white;
     background-color: black;
     border: 3px solid rgb(68, 65, 65) ;
     border-bottom: none;
     border-left: none;
     border-right: none;
     border-top: -3px;
-    padding: 5px 10px 5px 10px;
     border-radius: 5px;
+    height: 50px;
+    width: 120px;
+    transition: 0.2s;
+}
+.link .tex{
+    color: white;
+    font-size: 15px;
+    margin: auto;
+    transition: 0.2s;
 }
 .link:hover{
-    background-color: white;
-    color: black;
+    background-color: #E64C4C;
     border: 3px solid rgb(68, 65, 65) ;
     border-radius: 5px;
     border-bottom: none;
     border-left: none;
     border-right: none;
+    height: 60px;
+    width: 130px;
+}
+.link .tex:hover{
+    color: #FFCB05;
+    font-size: 20px;
 }
