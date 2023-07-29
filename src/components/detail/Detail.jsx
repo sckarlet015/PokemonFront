@@ -1,37 +1,58 @@
-import {useEffect, useState} from "react";
-import axios from "axios"
-import style from "./Card.module.css"
+import { useEffect, useState } from "react";
+import React from 'react';
+import style from './Detail.module.css';
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Detail(props) {
+const Detail = ({ allPokes }) => {
 
-    const [pokemon, setPokemon] = useState({})
-    const {pokeId} = useParams();
+  const [pokemon, setPokemon] = useState({})
+  const { name } = useParams();
 
-    useEffect(() => {
-        axios(`http://localhost:3001/pokemon/${pokeId}`)
-        .then(response => response.data)
-        .then(data => setPokemon(data))
-    },[])
+  useEffect(() => {
+    const foundPokemon = allPokes.find(poke => poke.name === name);
+    if (foundPokemon) {
+      setPokemon(foundPokemon);
+    } else {
+      console.log(`No se encontró el Pokemon con el nombre ${name}`);
+    }
+  }, [allPokes, name]);
 
-    return (
-      <div className={style.card}>
-        <h2>Detalles del pokemon</h2>
-        <img src={pokemon.imageSVG} alt="Pokemon" />
-        <div className={style.info}>
-          <h2 className={style.name}>#{pokemon.apiID} {props.name}</h2>
-          <p className={style.id}>ID: {pokemon.apiID}</p>
-          <p className={style.stat}>Vida: {pokemon.vida}</p>
-          <p className={style.stat}>Ataque: {pokemon.ataque}</p>
-          <p className={style.stat}>Defensa: {pokemon.defensa}</p>
-          <p className={style.stat}>Velocidad: {pokemon.velocidad}</p>
-          <p className={style.stat}>Altura: {pokemon.altura} m</p>
-          <p className={style.stat}>Peso: {pokemon.peso} kg</p>
+  return (
+    <div className={style.container}>
+      <div className={style.contImg}>
+        <div className={style.contImgUno}>
+          <img className={style.imgUno} src={pokemon.imageSVG} alt={pokemon.name} />
         </div>
-        <div className={style.type}>
-          <span className={style.grass}>Grass</span>
-          <span className={style.poison}>Poison</span>
+        <div className={style.contImgDos}>
+          <img className={style.imgDos} src={pokemon.imageFront} alt={pokemon.name} />
+          <img className={style.imgDos} src={pokemon.imageBack} alt={pokemon.name} />
         </div>
       </div>
-    )
-  }
+      <div className={style.contDetail}>
+        <div className={style.contTitle}>
+        <p className={style.pokemonName}>{pokemon.name}</p>
+        </div>
+        <div className={style.contTitle}>
+          <p className={style.pokedex}>Pokedex ID: {pokemon.apiID}</p>
+        </div>
+        <div className={style.pokemonDescription}>
+          <p className={style.descrition}>
+            Este es un Pokemon de tipo <b>{pokemon.Tipos && pokemon.Tipos[0]?.nombre}</b>  y tiene
+            una vida de {pokemon.vida}, un ataque de {pokemon.ataque}, una defensa de {pokemon.defensa} y una
+            velocidad de {pokemon.velocidad}. Su altura es de {pokemon.altura} decímetros y su peso es de {pokemon.peso} hectogramos.
+          </p>
+        </div>
+        <div className={style.pokemonStats}>
+          <div className={style.pokemonStat}>Vida: {pokemon.vida}</div>
+          <div className={style.pokemonStat}>Ataque: {pokemon.ataque}</div>
+          <div className={style.pokemonStat}>Defensa: {pokemon.defensa}</div>
+          <div className={style.pokemonStat}>Velocidad: {pokemon.velocidad}</div>
+          <div className={style.pokemonStat}>Altura: {pokemon.altura}</div>
+          <div className={style.pokemonStat}>Peso: {pokemon.peso}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Detail;

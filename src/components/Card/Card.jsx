@@ -31,11 +31,14 @@ export default function Card(props) {
     <div className={style.card}>
       <p className={style.id}>Pokedex iD: {props.id}</p>
       <div className={style.contImg}>
-      <img src={props.image} alt="Pokemon" style={{ height: `${handlerHeight()}px`, paddingTop: `${hadlerPading()}px` }}/>
+      <NavLink
+        to={`/detail/${props.name}`}>
+          <img src={props.image} alt="Pokemon" style={{ height: `${handlerHeight()}px`, paddingTop: `${hadlerPading()}px` }}/>
+        </NavLink>
       </div>
       <div className={style.info}>
         <NavLink
-        to={`/detail/${props.id}`}>
+        to={`/detail/${props.name}`}>
           <h1 className={style.name}>{props?.name?.toUpperCase()}</h1>
         </NavLink>
         <div className={style.contStat}>

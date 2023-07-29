@@ -1,6 +1,6 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css';
-import axios from "axios"
+import axios, { all } from "axios"
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllPokemon } from './redux/actions/getAllPokemon';
@@ -20,7 +20,7 @@ function App() {
   const [pokeBuscado, setPokeBuscado] = useState({})
   const navigate = useNavigate();
   const location = useLocation();
-
+  console.log(allPokes);
   useEffect(() => {
     if (pokemons.length === 0) {
       dispatch(getAllPokemon());
@@ -76,8 +76,8 @@ function App() {
         element={<Search pokeBuscado={pokeBuscado}/>}
         />
         <Route
-        path='/detail/:pokeId'
-        element={<Detail/>}
+        path='/detail/:name'
+        element={<Detail allPokes={allPokes}/>}
         />
       </Routes>
     </div>
